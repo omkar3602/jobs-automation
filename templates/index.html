@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Applications Automation</title>
+    <link rel="icon" 
+      type="image/png" 
+      href="{{ url_for('static', filename='favicon.png') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="max-w-5xl mx-auto p-6">
+        <h1 class="text-5xl font-bold text-center text-blue-600 mb-6">Job Applications Automation</h1>
+        <h2 class="text-xl text-center text-gray-700 mb-4">Found <b>{{ todays_jobs|length }}</b> new openings today from <a href="https://github.com/SimplifyJobs/New-Grad-Positions" class="text-blue-500 hover:underline" target="_blank">here</a>!</h2>
+        
+        <form action="/" method="post" class="bg-white shadow-lg rounded-lg p-6">
+            <div class="overflow-x-auto">
+                <table class="min-w-full border border-gray-300 rounded-lg">
+                    <thead>
+                        <tr class="bg-blue-500 text-white">
+                            <th class="py-2 px-4">Selected</th>
+                            <th class="py-2 px-4">Company</th>
+                            <th class="py-2 px-4">Role</th>
+                            <th class="py-2 px-4">Location</th>
+                            <th class="py-2 px-4">Link</th>
+                            <th class="py-2 px-4">Age</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for job in todays_jobs %}
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-2 px-4 text-center"><input type="checkbox" name="selected_job_ids" value="{{ job.id }}" id="{{ job.id }}" class="w-6 h-6"></td>
+                            <td class="py-2 px-4">{{ job.company }}</td>
+                            <td class="py-2 px-4">{{ job.role }}</td>
+                            <td class="py-2 px-4">{{ job.location }}</td>
+                            <td class="py-2 px-4"><a href="{{ job.link }}" class="text-blue-500 hover:underline" target="_blank">Apply Here</a></td>
+                            <td class="py-2 px-4">{{ job.age }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" name="todays_jobs" value="{{ todays_jobs }}">
+            <div class="flex justify-center mt-4">
+                <input type="submit" value="Add to Google Sheet" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 cursor-pointer">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
