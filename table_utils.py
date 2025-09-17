@@ -39,7 +39,7 @@ def extract_todays_openings(curr_id=0, category="software"):
             continue
         
         posted_time = datetime.fromtimestamp(job["date_posted"], tz=timezone.utc)
-        if start_of_day <= posted_time < end_of_day and job.get("category") in categories and job.get("active") == True and job.get("is_visible") == True:
+        if start_of_day <= posted_time < end_of_day and job.get("category") in categories and job.get("active") == True and job.get("is_visible") == True and job.get("sponsorship") in ["Other", "Offers Sponsorship"]:
             todays_openings.append({
                 "company": job.get("company_name"),
                 "role": job.get("title"),

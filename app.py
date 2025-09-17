@@ -73,4 +73,4 @@ def added():
     return render_template('success.html')
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8000)
+    app.run(host='localhost', port=8002)
