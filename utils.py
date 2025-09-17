@@ -2,6 +2,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 import os
+from werkzeug.security import check_password_hash
 
 load_dotenv(override=True)
 
@@ -36,3 +37,13 @@ def add_to_google_sheet(jobs):
     for job in jobs:
         # Append each job to the Google Sheet
         sheet.append_row([job['company'], job['role'], job['link']])
+
+
+
+ADMIN_USER = os.getenv("ADMIN_USER", "admin")
+ADMIN_HASH = os.getenv("ADMIN_HASH")
+
+def authenticate(username, password):
+    if username != ADMIN_USER:
+        return False
+    return check_password_hash(ADMIN_HASH, password)

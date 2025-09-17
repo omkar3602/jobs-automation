@@ -1,12 +1,40 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import utils
 import table_utils
+from decorators import login_required
+from dotenv import load_dotenv
+import os
+
+load_dotenv(override=True)
+
+
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev_fallback_key")
 
 github_url = 'https://github.com/SimplifyJobs/New-Grad-Positions'
 
 
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if utils.authenticate(username, password):
+            session["user"] = username
+            return redirect('/')
+        else:
+            return render_template('login.html', error='Invalid credentials')
+    return render_template('login.html')
+    
+@app.route("/logout")
+def logout():
+    session.pop("user", None)
+    return redirect("/login")
+
+
 @app.route('/', methods=['GET'])
+@login_required
 def main():
     # NEW CODE FOR READING FROM JSON FILE
     table_utils.download_json()
@@ -16,6 +44,7 @@ def main():
     return render_template('index.html', todays_jobs=todays_jobs)
 
 @app.route('/aiml/', methods=['GET'])
+@login_required
 def aiml_jobs():
     table_utils.download_json()
 
@@ -23,6 +52,7 @@ def aiml_jobs():
     return render_template('index.html', todays_jobs=todays_jobs)
 
 @app.route('/', methods=['POST'])
+@login_required
 def main_post():
     if request.method == 'POST':
         selected_job_ids = request.form.getlist('selected_job_ids')
@@ -36,6 +66,7 @@ def main_post():
         return redirect('/success/')
 
 @app.route('/success/', methods=['GET'])
+@login_required
 def added():
     return render_template('success.html')
 
