@@ -16,6 +16,8 @@ github_url = 'https://github.com/SimplifyJobs/New-Grad-Positions'
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if 'user' in session:
+        return redirect('/')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
