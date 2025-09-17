@@ -43,7 +43,7 @@ def main():
 
     todays_jobs = table_utils.extract_todays_openings(category="software")
 
-    return render_template('index.html', todays_jobs=todays_jobs)
+    return render_template('index.html', todays_jobs=todays_jobs, category="software")
 
 @app.route('/aiml/', methods=['GET'])
 @login_required
@@ -51,7 +51,7 @@ def aiml_jobs():
     table_utils.download_json()
 
     todays_jobs = table_utils.extract_todays_openings(category="aiml")
-    return render_template('index.html', todays_jobs=todays_jobs)
+    return render_template('index.html', todays_jobs=todays_jobs, category="aiml")
 
 @app.route('/', methods=['POST'])
 @login_required
