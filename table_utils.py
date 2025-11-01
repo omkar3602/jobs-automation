@@ -44,11 +44,15 @@ def extract_todays_openings(curr_id=0, category="software"):
             days_ago = (now.date() - posted_time.date()).days
             age_str = f"{days_ago}d"
             
+            # Format date_posted as "1-Nov, Sat"
+            date_posted_str = f"{posted_time.day}-{posted_time.strftime('%b')}, {posted_time.strftime('%a')}"
+            
             todays_openings.append({
                 "company": job.get("company_name"),
                 "role": job.get("title"),
                 "location": ", ".join(job.get("locations", [])) if job.get("locations") else "N/A",
                 "link": job.get("url"),
+                "date_posted": date_posted_str,
                 "age": age_str,
                 "id": curr_id
             })

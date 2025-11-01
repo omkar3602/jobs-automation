@@ -38,6 +38,7 @@
                             <th class="py-2 px-4">Role</th>
                             <th class="py-2 px-4">Location</th>
                             <th class="py-2 px-4">Link</th>
+                            <th class="py-2 px-4">Date Posted</th>
                             <th class="py-2 px-4">Age</th>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                             <td class="py-2 px-4">{{ job.role }}</td>
                             <td class="py-2 px-4">{{ job.location }}</td>
                             <td class="py-2 px-4"><a href="{{ job.link }}" class="text-blue-500 hover:underline" target="_blank">Apply Here</a></td>
+                            <td class="py-2 px-4">{{ job.date_posted }}</td>
                             <td class="py-2 px-4">{{ job.age }}</td>
                         </tr>
                         {% endfor %}

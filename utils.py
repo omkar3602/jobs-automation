@@ -3,6 +3,8 @@ from google.oauth2.service_account import Credentials
 from dotenv import load_dotenv
 import os
 from werkzeug.security import check_password_hash
+from datetime import datetime
+import pytz
 
 load_dotenv(override=True)
 
@@ -34,9 +36,14 @@ def add_to_google_sheet(jobs):
     sheet = client.open_by_key(SPREADSHEET_ID).sheet1  # Access the first sheet
 
 
+    # Get current date in EST
+    est = pytz.timezone("America/New_York")
+    now_est = datetime.now(est)
+    current_date_est = f"{now_est.day}-{now_est.strftime('%b')}, {now_est.strftime('%a')}"
+    
     for job in jobs:
-        # Append each job to the Google Sheet
-        sheet.append_row([job['company'], job['role'], job['link']])
+        # Append each job to the Google Sheet with current EST date
+        sheet.append_row([job['company'], job['role'], job['link'], current_date_est])
 
 
 
