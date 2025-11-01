@@ -28,10 +28,10 @@ def extract_todays_openings(curr_id=0, category="software"):
     with open(FILE_PATH, "r") as f:
         data = json.load(f)
     
-    # Get today's UTC date boundaries
+    # Get date boundaries for the past 3 days (including today)
     now = datetime.now(timezone.utc)
-    start_of_day = datetime(now.year, now.month, now.day, tzinfo=timezone.utc)
-    end_of_day = start_of_day + timedelta(days=1)
+    end_of_day = datetime(now.year, now.month, now.day, tzinfo=timezone.utc) + timedelta(days=1)
+    start_of_period = end_of_day - timedelta(days=3)
 
     todays_openings = []
     for job in data:
@@ -39,13 +39,17 @@ def extract_todays_openings(curr_id=0, category="software"):
             continue
         
         posted_time = datetime.fromtimestamp(job["date_posted"], tz=timezone.utc)
-        if start_of_day <= posted_time < end_of_day and job.get("category") in categories and job.get("active") == True and job.get("is_visible") == True and job.get("sponsorship") in ["Other", "Offers Sponsorship"]:
+        if start_of_period <= posted_time < end_of_day and job.get("category") in categories and job.get("active") == True and job.get("is_visible") == True and job.get("sponsorship") in ["Other", "Offers Sponsorship"]:
+            # Calculate age in days
+            days_ago = (now.date() - posted_time.date()).days
+            age_str = f"{days_ago}d"
+            
             todays_openings.append({
                 "company": job.get("company_name"),
                 "role": job.get("title"),
                 "location": ", ".join(job.get("locations", [])) if job.get("locations") else "N/A",
                 "link": job.get("url"),
-                "age": "0d",
+                "age": age_str,
                 "id": curr_id
             })
             curr_id += 1
