@@ -33,7 +33,9 @@
                 <table class="min-w-full border border-gray-300 rounded-lg">
                     <thead>
                         <tr class="bg-blue-500 text-white">
+                            {% if is_logged_in %}
                             <th class="py-2 px-4">Selected</th>
+                            {% endif %}
                             <th class="py-2 px-4">Company</th>
                             <th class="py-2 px-4">Role</th>
                             <th class="py-2 px-4">Location</th>
@@ -45,7 +47,9 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         {% for job in todays_jobs %}
                         <tr class="hover:bg-gray-100">
+                            {% if is_logged_in %}
                             <td class="py-2 px-4 text-center"><input type="checkbox" name="selected_job_ids" value="{{ job.id }}" id="{{ job.id }}" class="w-6 h-6"></td>
+                            {% endif %}
                             <td class="py-2 px-4">{{ job.company }}</td>
                             <td class="py-2 px-4">{{ job.role }}</td>
                             <td class="py-2 px-4">{{ job.location }}</td>
@@ -58,9 +62,11 @@
                 </table>
             </div>
             <input type="hidden" name="todays_jobs" value="{{ todays_jobs }}">
+            {% if is_logged_in %}
             <div class="flex justify-center mt-4">
                 <input type="submit" value="Add to Google Sheet" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 cursor-pointer">
             </div>
+            {% endif %}
         </form>
     </div>
 </body>

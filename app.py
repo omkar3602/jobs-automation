@@ -36,22 +36,24 @@ def logout():
 
 
 @app.route('/', methods=['GET'])
-@login_required
 def main():
+    is_logged_in = 'user' in session
+
     # NEW CODE FOR READING FROM JSON FILE
     table_utils.download_json()
 
     todays_jobs = table_utils.extract_todays_openings(category="software")
 
-    return render_template('index.html', todays_jobs=todays_jobs, category="software")
+    return render_template('index.html', todays_jobs=todays_jobs, category="software", is_logged_in=is_logged_in)
 
 @app.route('/aiml/', methods=['GET'])
-@login_required
 def aiml_jobs():
+    is_logged_in = 'user' in session
+
     table_utils.download_json()
 
     todays_jobs = table_utils.extract_todays_openings(category="aiml")
-    return render_template('index.html', todays_jobs=todays_jobs, category="aiml")
+    return render_template('index.html', todays_jobs=todays_jobs, category="aiml", is_logged_in=is_logged_in)
 
 @app.route('/', methods=['POST'])
 @login_required
