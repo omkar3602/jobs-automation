@@ -53,9 +53,12 @@ def main():
 def aiml_jobs():
     is_logged_in = 'user' in session
 
-    table_utils.download_json()
+    # OLD CODE FOR READING FROM README.md
+    todays_jobs = table_utils.extract_todays_openings_from_readme(category="aiml")
 
-    todays_jobs = table_utils.extract_todays_openings(category="aiml")
+    # table_utils.download_json()
+
+    # todays_jobs = table_utils.extract_todays_openings(category="aiml")
     return render_template('index.html', todays_jobs=todays_jobs, category="aiml", is_logged_in=is_logged_in)
 
 @app.route('/', methods=['POST'])

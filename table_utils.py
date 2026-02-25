@@ -93,7 +93,11 @@ def extract_todays_openings_from_readme(category="software"):
 
     if not readme:
         return render_template('error.html', message='README not found')
-    table = readme.find('table')
+    
+    if category == "software":
+        table = readme.find_all('table')[0]
+    elif category == "aiml":
+        table = readme.find_all('table')[4]
 
     # Not needed in new version
     # today = datetime.now().strftime('%b %d')
@@ -102,8 +106,8 @@ def extract_todays_openings_from_readme(category="software"):
     first_row = rows[0]
 
     rows.remove(first_row)
-    # Filter rows by last three days (0d, 1d, 2d)
-    rows = [row for row in rows if row.find_all('td')[4].text.strip() == "0d" or row.find_all('td')[4].text.strip() == "1d" or row.find_all('td')[4].text.strip() == "2d"]
+    # Filter rows by last four days (0d, 1d, 2d, 3d)
+    rows = [row for row in rows if row.find_all('td')[4].text.strip() == "0d" or row.find_all('td')[4].text.strip() == "1d" or row.find_all('td')[4].text.strip() == "2d" or row.find_all('td')[4].text.strip() == "3d"]
     # Filter by open applications
     rows = [row for row in rows if row.find_all('td')[3].text.strip() != '🔒']
 
