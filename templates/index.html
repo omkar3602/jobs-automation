@@ -10,6 +10,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
+    <!-- navbar -->
+    <nav class="bg-white shadow">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-center">
+            <div class="flex items-center space-x-6">
+                <!-- simplify jobs -->
+                <a href="/" class="flex items-center space-x-1 hover:opacity-75">
+                    <span class="text-2xl">🏠</span>
+                    <span class="font-semibold text-lg text-gray-800">Simplify Jobs</span>
+                </a>
+                <!-- newgrad jobs emoji -->
+                <!-- <a href="/newgrad-jobs/" class="flex items-center space-x-1 hover:opacity-75">
+                    <span class="text-2xl">📄</span>
+                    <span class="font-semibold text-lg text-gray-800">NewGrad Jobs</span>
+                </a> -->
+                <!-- aiml emoji -->
+                <a href="/aiml/" class="flex items-center space-x-1 hover:opacity-75">
+                    <span class="text-2xl">🤖</span>
+                    <span class="font-semibold text-lg text-gray-800">AI/ML</span>
+                </a>
+            </div>
+        </div>
+    </nav>
     <div class="max-w-5xl mx-auto p-6">
         <h1 class="text-5xl font-bold text-center text-blue-600 mb-6">Job Applications Automation</h1>
         <h2 class="text-4xl font-bold text-center text-gray-800 mb-2">
@@ -22,11 +44,6 @@
         <h2 class="text-xl text-center text-gray-700 mb-4">Found <b>{{ todays_jobs|length }}</b> new openings today from <a href="https://github.com/SimplifyJobs/New-Grad-Positions" class="text-blue-500 hover:underline" target="_blank">here</a>!</h2>
         
         <h2 class="text-xl text-center text-gray-700 mb-4">
-            {% if category == "software" %}
-                Click here to view <a href="/aiml/" class="text-blue-500 hover:underline">AI/ML Engineering</a> openings
-            {% elif category == "aiml" %}
-                Click here to view <a href="/" class="text-blue-500 hover:underline">Software Engineering</a> openings
-            {% endif %}
         </h2>
         <form action="/" method="post" class="bg-white shadow-lg rounded-lg p-6">
             <div class="overflow-x-auto">
@@ -40,7 +57,6 @@
                             <th class="py-2 px-4">Role</th>
                             <th class="py-2 px-4">Location</th>
                             <th class="py-2 px-4">Link</th>
-                            <th class="py-2 px-4">Date Posted</th>
                             <th class="py-2 px-4">Age</th>
                         </tr>
                     </thead>
@@ -54,7 +70,6 @@
                             <td class="py-2 px-4">{{ job.role }}</td>
                             <td class="py-2 px-4">{{ job.location }}</td>
                             <td class="py-2 px-4"><a href="{{ job.link }}" class="text-blue-500 hover:underline" target="_blank">Apply Here</a></td>
-                            <td class="py-2 px-4">{{ job.date_posted }}</td>
                             <td class="py-2 px-4">{{ job.age }}</td>
                         </tr>
                         {% endfor %}
