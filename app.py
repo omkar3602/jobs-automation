@@ -39,10 +39,13 @@ def logout():
 def main():
     is_logged_in = 'user' in session
 
-    # NEW CODE FOR READING FROM JSON FILE
-    table_utils.download_json()
+    # OLD CODE FOR READING FROM README.md
+    todays_jobs = table_utils.extract_todays_openings_from_readme(category="software")
 
-    todays_jobs = table_utils.extract_todays_openings(category="software")
+    # NEW CODE FOR READING FROM JSON FILE
+    # table_utils.download_json()
+
+    # todays_jobs = table_utils.extract_todays_openings(category="software")
 
     return render_template('index.html', todays_jobs=todays_jobs, category="software", is_logged_in=is_logged_in)
 
