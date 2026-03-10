@@ -122,7 +122,7 @@ def extract_todays_openings_from_readme(category="software"):
                 if td.text.strip() == '↳':
                     job[headers[i]] = todays_jobs[-1]['company']
                 else:
-                    if td.find('strong'):
+                    if td.find('strong').find('a'):
                         job[headers[i]] = td.find('strong').find('a').text.strip()
                     else:
                         job[headers[i]] = td.text.strip()
